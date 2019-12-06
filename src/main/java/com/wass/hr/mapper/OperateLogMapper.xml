@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wass.hr.mapper.OperateLogMapper">
+    <!--插入日志表-->
+    <insert id="insert" parameterType="OperateLog">
+        INSERT INTO user_operate_log (
+            operate_log_id,
+            operate_date_time,
+            operate_content,
+            operator_Id,
+            operate_type
+        )
+        VALUES
+        (
+            #operateLogId,
+            #operateDateTime,
+            #operateContent,
+            #operatorId,
+            #operateType
+        )
+    </insert>
+
+    <select id="getList" resultType="OperateLog">
+        SELECT
+        t.*, u.account AS operatorName
+        FROM
+        user_operate_log t
+        LEFT JOIN user_info u ON t.operatorId = u.user_id where 1=1
+        <if test="account!=null and account!='' ">
+            and u.account=#{account}
+        </if>
+        <if test="keyword not in {null,''}">
+            and u.account like '%${keyword}%'
+        </if>
+        <if test="accountName !=null and accountName !='' ">
+            and u.account like '%${accountName}%'
+        </if>
+        <if test="operation !=null and operation !='' ">
+            and t.operateType = #{operation}
+        </if>
+        <if test="startTimes !=null and startTimes !='' ">
+            and t.operateTime &gt;=#{startTimes}
+        </if>
+        <if test="endTimes !=null and endTimes !='' ">
+            and t.operateTime &lt;#{endTimes}
+        </if>
+        <if test="orderField !=null and orderField !='' ">
+            order by ${orderField}
+        </if>
+    </select>
+
+</mapper>
+

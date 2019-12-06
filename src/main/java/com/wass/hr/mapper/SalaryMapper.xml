@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wass.hr.mapper.SalaryMapper">
+
+    <!--根据条件查询员工工资信息-->
+    <select id="getUserList" resultType="com.wass.hr.entity.Salary">
+        select
+            salary_id,
+            staff_id,
+            dept_id,
+            bonus,
+            lunch_salary,
+            traffic_salary,
+            basic_salary,
+            all_salary
+        from staff_salary where 1 = 1
+    </select>
+
+    <!--新增工资信息-->
+    <insert id="insert" parameterType="com.wass.hr.entity.Salary">
+        insert into staff_salary (
+            salary_id,
+            staff_id,
+            dept_id,
+            bonus,
+            lunch_salary,
+            traffic_salary,
+            basic_salary,
+            all_salary
+        ) values {
+            #salaryId,
+            #staffId
+            #deptId,
+            #bonus,
+            #lunchSalary,
+            #trafficSalary,
+            #basicSalary,
+            #allSalary
+        }
+    </insert>
+
+    <!--修改工资信息-->
+    <update id="update" parameterType="com.wass.hr.entity.Salary">
+        update staff_salary set
+            bonus = #bonus,
+            basic_salary = #basicSalary,
+            all_salary = #allSalary
+        where salary_id = #salaryId
+    </update>
+
+    <!--删除工资信息-->
+    <delete id="delete" parameterType="java.lang.Long">
+        delete from staff_salary where salary_id = #salaryId
+    </delete>
+
+</mapper>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wass.hr.mapper.AjustSalaryMapper">
+
+    <!--根据条件查询员工调薪信息-->
+    <select id="getDeptList" resultType="com.wass.hr.entity.AjustSalary">
+        select
+            staff_adjust_salary_id,
+            adjust_salary_date,
+            befor_adjust_salary,
+            after_adjust_salary,
+            adjust_salary_reason,
+            remark
+        from staff_adjust_salary
+        where 1 = 1
+        <if test="dept_name != null">
+            and dept_name = #deptName
+        </if>
+    </select>
+    <!--新增调薪信息-->
+    <insert id="insert" parameterType="com.wass.hr.entity.AjustSalary">
+        insert into staff_adjust_salary (
+            staff_adjust_salary_id,
+            adjust_salary_date,
+            befor_adjust_salary,
+            after_adjust_salary,
+            adjust_salary_reason,
+            remark
+        ) values {
+            #staffAdjustSalaryId,
+            #adjustSalaryDate,
+            #beforAdjustSalary,
+            #afterAdjustSalary,
+            #adjustSalaryReason,
+            #remark
+        }
+    </insert>
+
+    <!--修改调薪信息-->
+    <update id="update" parameterType="com.wass.hr.entity.AjustSalary">
+        update staff_adjust_salary set
+            befor_adjust_salary = #beforAdjustSalary,
+            after_adjust_salary = #afterAdjustSalary
+        where staff_adjust_salary_id = #staffAdjustSalaryId
+    </update>
+
+    <!--删除调薪信息-->
+    <delete id="delete" parameterType="java.lang.Long">
+        delete from staff_adjust_salary where staff_adjust_salary_id = #staffAdjustSalaryId
+    </delete>
+
+</mapper>

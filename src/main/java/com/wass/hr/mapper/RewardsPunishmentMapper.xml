@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wass.hr.mapper.RewardsPunishmentMapper">
+
+    <!--根据条件查询用户奖惩信息-->
+    <select id="getUserList" resultType="com.wass.hr.entity.RewardsPunishment">
+        select
+        rpsmt_id,
+        rpsmt_date,
+        rpsmt_reason,
+        rpsmt_point,
+        rpsmt_type,
+        remark
+        from staff_rdpsmt where 1 = 1
+    </select>
+
+    <!--新增奖惩信息-->
+    <insert id="insert" parameterType="com.wass.hr.entity.RewardsPunishment">
+        insert into staff_rdpsmt (
+            rpsmt_id,
+            rpsmt_date,
+            rpsmt_reason,
+            rpsmt_point,
+            rpsmt_type,
+            remark
+        ) values {
+            #rpsmtId,
+            #rpsmtDate
+            #rpsmtReason,
+            #rpsmtPoint,
+            #rpsmtType,
+            #remark
+        }
+    </insert>
+
+    <!--修改奖惩信息-->
+    <update id="update" parameterType="com.wass.hr.entity.RewardsPunishment">
+        update staff_rdpsmt set
+            rpsmt_date = #rpsmtDate,
+            rpsmt_reason = #rpsmtReason,
+            rpsmt_point = #rpsmtPoint,
+            rpsmt_type = rpsmtType
+        where user_id = #user_id
+    </update>
+
+    <!--删除奖惩信息-->
+    <delete id="delete" parameterType="java.lang.Long">
+        delete from staff_rdpsmt where rpsmt_id = #rpsmtId
+    </delete>
+
+</mapper>

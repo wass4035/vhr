@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wass.hr.mapper.StaffRemoveMapper">
+
+    <!--根据条件查询员工调动信息-->
+    <select id="getStaffRemoveList" resultType="com.wass.hr.entity.StaffRemove">
+        select
+        staff_remove_id,
+        after_remove_dept_id,
+        after_remove_job,
+        remove_date,
+        remove_reason,
+        remark
+        from staff_remove where 1 = 1
+    </select>
+
+    <!--新增员工调动信息-->
+    <insert id="insert" parameterType="com.wass.hr.entity.StaffRemove">
+        insert into staff_remove (
+            staff_remove_id,
+            after_remove_dept_id,
+            after_remove_job,
+            remove_date,
+            remove_reason,
+            remark
+        ) values {
+            #staffRemoveId
+            #afterRemoveDeptId,
+            #afterRemoveJob,
+            #removeDate,
+            #removeReason,
+            #remark
+        }
+    </insert>
+
+    <!--修改员工调动信息-->
+    <update id="update" parameterType="com.wass.hr.entity.StaffRemove">
+        update staff_remove set
+            after_remove_dept_id = #staffRemoveId,
+            after_remove_job = #afterRemoveJob,
+            remove_date = #removeDate,
+            remove_reason = #removeReason,
+            remark = #remark
+        where staff_remove_id = #staffRemoveId
+    </update>
+
+    <!--删除员工调动信息-->
+    <delete id="delete" parameterType="java.lang.Long">
+        delete from staff_remove where staff_remove_id = #staffRemoveId
+    </delete>
+
+</mapper>
